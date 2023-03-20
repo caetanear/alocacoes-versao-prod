@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alocação de Salas | Senac</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/cabecalho.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
+    <script src="js/script1.js" defer></script>
+</head>
+<body>
+    <header>
+            <img alt="Logo do Senac" class="logo" src="./img/logo.png">
+        <div class="">
+        <div class="cabecalho-container">
+        <div class="cabecalho">
+            <h1>Alocações</h1>
+        </div>
+        </div>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="card">
+            <div class="lineInput">
+                <label>Nome</label>
+                <input type="text" id="nome" placeholder="Nome do produto">
+            </div>
+
+            <div class="lineInput">
+                <label for="">Curso</label>
+                <input type="text" name="" id="preco" placeholder="Preço do produto">
+            </div>
+
+            <div class="lineInput">
+                <label for="">Sala</label>
+                <input type="text" name="" id="sala" placeholder="Preço do produto">
+            </div>
+
+            <div class="lineInput">
+                <label for="">Data</label>
+                <input type="date" name="" id="data" placeholder="Preço do produto">
+            </div>
+
+            <button onclick="nome.salvar()" id="btn-salvar">Salvar</button>
+            <button onclick="nome.cancelar()">Cancelar</button>           
+        </div>
+        <div class="content">
+            <table border="1">
+                <thead>
+                    <th class="center">ID</th>
+                    <th>Nome</th>
+                    <th>Curso</th>
+                    <th>Sala</th>
+                    <th>Data</th>
+                   <th class="center">Ações</th>
+                </thead>
+                <tbody id="tbody">
+                    
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="js/script1.js"></script>
+    	<footer>
+		<div class="footer">
+			<div class="footer-container">
+			<img class="segundologo" src="./img/footer_logo.jpg">
+			<p class="text-center" >
+			<h3>©Todos os direitos reservados</h3>
+			</p>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>
