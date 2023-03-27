@@ -7,21 +7,33 @@ class Produto {
     }
 
     salvar(){
-        let nome = this.lerDados();
-        let preco = this.lerDados();
-        let sala = this.lerDados();
-        let data = this.lerDados(); 
+        let nome = this.lerDados().nomeProduto;
+        let curso = this.lerDados().curso;
+        let sala = this.lerDados().sala;
+        let data = this.lerDados().data;
 
-        if(this.validaCampos(nome, preco, sala, data)){
+        const alocacao = { nome, curso, sala, data };
+
+        if(this.validaCampos(alocacao)){
             if(this.editId == null){
-                this.adicionar(nome, preco, sala, data);
+                this.adicionar(alocacao);
             } else{
-                this.atualizar(this.editId, nome, preco, sala, data);
+                this.atualizar(this.editId, alocacao);
             }
         }
 
-        this.listaTabela();
-        this.cancelar();
+        //Método para enviar alocacao para backend via FETCH. LEMBRETE: ALTERAR URL PARA URL DO ENDPOINT
+        fetch('https://localhost:5000/api/endpoin/criar', {
+            method: "POST", // verificar metodo no backend
+            body: JSON.stringify(alocacao),
+            headers: { "Content-type": "application/json; charset=UTF-8" }
+        })
+            .then(response => response.json())
+            .then(json => console.log(json))
+            .catch(err => console.log(err));
+        //FIM DO MÉTODO
+        //console.log(alocacao);
+        
     }
 
     listaTabela(){
@@ -40,7 +52,7 @@ class Produto {
 
             td_id.innerText = this.arrayProdutos[i].id;
             td_nome.innerText = this.arrayProdutos[i].nomeProduto;
-            td_curso.innerText = this.arrayProdutos[i].preco;
+            td_curso.innerText = this.arrayProdutos[i].curso;
             td_sala.innerText = this.arrayProdutos[i].sala;
             td_data.innerText = this.arrayProdutos[i].data;
             
@@ -66,7 +78,7 @@ class Produto {
         this.arrayProdutos.push(nome);
         this.id++;
 
-      /*this.arrayProdutos.push(preco);
+      /*this.arrayProdutos.push(curso);
         
 
         this.arrayProdutos.push(sala);
@@ -76,22 +88,33 @@ class Produto {
         
     }
 
-    atualizar(id, nome){
+    atualizar(id, alocacao){
         for(let i = 0; i < this.arrayProdutos.length; i++){
             if(this.arrayProdutos[i].id == id){
-                this.arrayProdutos[i].nomeProduto = nome.nomeProduto;
-                this.arrayProdutos[i].preco = nome.preco;
-                this.arrayProdutos[i].sala = nome.sala;
-                this.arrayProdutos[i].data = nome.data;
+                this.arrayProdutos[i].nomeProduto = alocacao.nomeProduto;
+                this.arrayProdutos[i].curso = alocacao.curso;
+                this.arrayProdutos[i].sala = alocacao.sala;
+                this.arrayProdutos[i].data = alocacao.data;
             }
         }
+         //Método para excluir alocacao para backend via FETCH. LEMBRETE: ALTERAR URL PARA URL DO ENDPOINT
+         fetch('https://localhost:5000/api/endpoint/alterar', {
+            method: "PUT", // verificar metodo no backend
+            body: JSON.stringify(alocacao),
+            headers: { "Content-type": "application/json; charset=UTF-8" }
+        })
+            .then(response => response.json())
+            .then(json => console.log(json))
+            .catch(err => console.log(err));
+    //FIM DO MÉTODO
+
     }
 
     preparaEdicao(dados){
         this.editId = dados.id;
 
         document.getElementById('nome').value = dados.nomeProduto;
-        document.getElementById('preco').value = dados.preco;
+        document.getElementById('curso').value = dados.curso;
         document.getElementById('sala').value = dados.sala;
         document.getElementById('data').value = dados.data;
 
@@ -102,29 +125,34 @@ class Produto {
         let nome = {}
             nome.id = this.id;
             nome.nomeProduto = document.getElementById('nome').value;
-            nome.preco = document.getElementById('preco').value;
+            nome.curso = document.getElementById('curso').value;
             nome.sala = document.getElementById('sala').value;
             nome.data = document.getElementById('data').value;
             return nome;
         }
 
-    validaCampos(nome){
+    validaCampos(alocacao){
         let mensagem = '';
-        if(nome.nomeProduto == ''){
+        if(alocacao.nome == ''){
             mensagem += 'Informe o campo nome \n';
         }
-        if(nome.preco == ''){
-            mensagem += 'Informe o campo preco \n';
+
+        if(alocacao.curso == ''){
+            mensagem += 'Informe o campo curso \n';
         }
+
         if(mensagem != ''){
+            window.alert(mensagem);
             return false;
         }
+
+        
         return true;
     }
 
     cancelar(){
         document.getElementById('nome').value = '';
-        document.getElementById('preco').value = '';
+        document.getElementById('curso').value = '';
         document.getElementById('sala').value = '';
         document.getElementById('data').value = '';
 
@@ -133,18 +161,27 @@ class Produto {
     }
 
     deletar(id){
-
         if(confirm('Deseja deletar o campo ' + id + '?')){
+            //Método para excluir alocacao para backend via FETCH. LEMBRETE: ALTERAR URL PARA URL DO ENDPOINT
+            fetch('https://localhost:5000/api/endpoint/excluir', + id, {
+                    method: "DELETE", // verificar metodo no backend
+                    body: JSON.stringify(alocacao),
+                    headers: { "Content-type": "application/json; charset=UTF-8" }
+                })
+                    .then(response => response.json())
+                    .then(json => console.log(json))
+                    .catch(err => console.log(err));
+            //FIM DO MÉTODO
 
-        let tbody = document.getElementById('tbody');
+            let tbody = document.getElementById('tbody');
 
-        for(let i = 0; i < this.arrayProdutos.length; i++){
-            if(this.arrayProdutos[i].id == id){
-                this.arrayProdutos.splice(i, 1);
-                tbody.deleteRow(i);
+            for(let i = 0; i < this.arrayProdutos.length; i++){
+                if(this.arrayProdutos[i].id == id){
+                    this.arrayProdutos.splice(i, 1);
+                    tbody.deleteRow(i);
+                }
             }
         }
-    }
     }
 }
 
