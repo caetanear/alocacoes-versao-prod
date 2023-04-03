@@ -33,7 +33,6 @@ class Produto {
             .catch(err => console.log(err));
         //FIM DO MÉTODO
         //console.log(alocacao);
-        
     }
 
     listaTabela(){
